@@ -12,13 +12,13 @@ table(data$color)
 table(data$clarity)
 table(data$cut)
 
-data$colorscore <- revalue(data$cut, c("J"="0", "I"="1", "H"="2", "G"="3", "F"="4", "E"="5", "D"="6"))
+data$colorscore <- revalue(data$color, c("J"="0", "I"="1", "H"="2", "G"="3", "F"="4", "E"="5", "D"="6"))
 data$clarityscore <- revalue(data$clarity, c("SI2"="0", "SI1"="1", "VS2"="2", "VS1"="3","VVS2"="4", "VVS1"="5", "IF"="6", "FL"="7"))
 
 attach(data)
 
 data$colorscore <- as.numeric(colorscore)
 data$clarityscore <- as.numeric(clarityscore)
-plot(cutscore~clarityscore)
+plot(colorscore~clarityscore)
 
-datFormatted <- data[, c(5, 1, 6, 7, 3)] # new data set 
+datFormatted <- data[, c(5, 1, 6, 7, 4)] # new data set 
