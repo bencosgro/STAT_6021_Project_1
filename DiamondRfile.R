@@ -21,3 +21,4 @@ data$cutscore <- as.numeric(cutscore)
 data$clarityscore <- as.numeric(clarityscore)
 plot(cutscore~clarityscore)
 
+datFormatted <- data[, c(5, 1, 6, 7, 3)]
