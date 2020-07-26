@@ -1,5 +1,5 @@
 #setwd("/Users/ben_cosgo/Working_directory") change
-#setwd("/c/Users/joony/Documents/myGit/STAT_6021_Project_1")
+#setwd("C:/Users/joony/Documents/myGit/STAT_6021_Project_1")
 
 library("tidyverse")
 library(plyr)
@@ -12,13 +12,24 @@ table(data$color)
 table(data$clarity)
 table(data$cut)
 
+# convert color and clarity to factors that are sorted in increasing order
 data$colorscore <- revalue(data$color, c("J"="0", "I"="1", "H"="2", "G"="3", "F"="4", "E"="5", "D"="6"))
 data$clarityscore <- revalue(data$clarity, c("SI2"="0", "SI1"="1", "VS2"="2", "VS1"="3","VVS2"="4", "VVS1"="5", "IF"="6", "FL"="7"))
+data$cutscore <- revalue(data$cut, c("Good"="0", "Very Good"="1", "Astor Ideal"="2", "Ideal"="3"))
 
 attach(data)
 
-data$colorscore <- as.numeric(colorscore)
-data$clarityscore <- as.numeric(clarityscore)
-plot(colorscore~clarityscore)
+# data$colorscore <- as.numeric(colorscore)
+# data$clarityscore <- as.numeric(clarityscore)
+# plot(colorscore~clarityscore)
 
-datFormatted <- data[, c(5, 1, 6, 7, 4)] # new data set 
+datFormatted <- data[, c(5, 1, 6, 7, 8)] # new data set that only has what we will use 
+head(datFormatted)
+
+# datNoY <- datFormatted[, -1]
+# head(datNoY) # this should not include price 
+
+lmodel <- lm(datFormatted)
+summary(lmodel)
+
+
