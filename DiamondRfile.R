@@ -37,11 +37,6 @@ boxplot(price~clarity,data=data, main="Price vs Clarity", xlab="Clarity of Diamo
 boxplot(price~cut,data=data, main="Price vs Cut", xlab="Cut of Diamond", ylab="Price of Diamond")
 boxplot
 
-# convert color and clarity to factors that are sorted in increasing order
-data$colorscore <- factor(revalue(data$color, c("J"="0", "I"="1", "H"="2", "G"="3", "F"="4", "E"="5", "D"="6")))
-data$clarityscore <- factor(revalue(data$clarity, c("SI2"="0", "SI1"="1", "VS2"="2", "VS1"="3","VVS2"="4", "VVS1"="5", "IF"="6", "FL"="7")))
-data$cutscore <- factor(revalue(data$cut, c("Good"="0", "Very Good"="1", "Astor Ideal"="2", "Ideal"="3")))
-
 attach(data)
 
 # data$colorscore <- as.numeric(colorscore)
