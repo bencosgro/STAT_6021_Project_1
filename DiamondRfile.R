@@ -1,4 +1,4 @@
-#setwd("/Users/ben_cosgo/Working_directory") change
+#setwd("/Users/ben_cosgo/Working_directory/STAT_6021_Project_1")
 #setwd("C:/Users/joony/Documents/myGit/STAT_6021_Project_1")
 
 library("tidyverse")
