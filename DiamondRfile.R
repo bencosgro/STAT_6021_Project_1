@@ -16,6 +16,27 @@ table(data$color)
 table(data$clarity)
 table(data$cut)
 
+#can we order the x axis by worst class to best class?
+#redorder color from worst class to best class
+data$color <- factor(data$color, levels=c("J","I","H","G","F","E","D"))
+#check reorder
+table(data$color)
+#reorder clarity from worst to best class
+data$clarity <- factor(data$clarity, levels=c("SI2","SI1","VS2","VS1","VVS2","VVS1","IF", "FL"))
+#check reorder
+table(data$clarity)
+#reorder cut from worst to best class
+data$cut <- factor(data$cut, levels=c("Good","Very Good","Ideal","Astor Ideal"))
+#check redorder
+table(data$cut)
+#every color class has lots of outliers for high prices - the better the color, the more spread in the outliers
+boxplot(price~color,data=data, main="Price vs Color", xlab="Color of Diamond", ylab="Price of Diamond")
+#every clarity class has lots of outliers for high prices
+boxplot(price~clarity,data=data, main="Price vs Clarity", xlab="Clarity of Diamond", ylab="Price of Diamond")
+#every cut class has lots of outliers for high prices - the better the cut, the more spread in the outliers
+boxplot(price~cut,data=data, main="Price vs Cut", xlab="Cut of Diamond", ylab="Price of Diamond")
+boxplot
+
 # convert color and clarity to factors that are sorted in increasing order
 data$colorscore <- factor(revalue(data$color, c("J"="0", "I"="1", "H"="2", "G"="3", "F"="4", "E"="5", "D"="6")))
 data$clarityscore <- factor(revalue(data$clarity, c("SI2"="0", "SI1"="1", "VS2"="2", "VS1"="3","VVS2"="4", "VVS1"="5", "IF"="6", "FL"="7")))
@@ -172,3 +193,5 @@ levene.test(price,clarityscore)
 pairwise<-glht(lmodel_clarityscore, linfct = mcp(clarityscore= "Tukey"))
 summary(pairwise)
 # yes 
+
+
