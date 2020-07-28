@@ -35,17 +35,15 @@ boxplot(price~color,data=data, main="Price vs Color", xlab="Color of Diamond", y
 boxplot(price~clarity,data=data, main="Price vs Clarity", xlab="Clarity of Diamond", ylab="Price of Diamond")
 #every cut class has lots of outliers for high prices - the better the cut, the more spread in the outliers
 boxplot(price~cut,data=data, main="Price vs Cut", xlab="Cut of Diamond", ylab="Price of Diamond")
-boxplot
-
-attach(data)
 
 # data$colorscore <- as.numeric(colorscore)
 # data$clarityscore <- as.numeric(clarityscore)
 # plot(colorscore~clarityscore)
 
-datFormatted <- data[, c(5, 1, 6, 7, 8)] # new data set that only has what we will use 
-head(datFormatted)
-attach(datFormatted)
+head(data)
+#datFormatted <- data[, c(5, 1, 6, 7, 8)] # new data set that only has what we will use 
+#head(datFormatted)
+#attach(datFormatted)
 
 # lets get a scatter plot first 
 
@@ -60,7 +58,7 @@ plot(x, y, main=title, xlab=xlab, ylab=ylab)
 
 
 # perform the linear regression to our newly formatted dataset 
-lmodel <- lm(datFormatted)
+lmodel <- lm(data)
 summary(lmodel)
 
 abline(lmodel, col="red")
@@ -84,12 +82,12 @@ lamb <- 0.372
 
 newPrice <- price^lamb
 
-datFormatted_fixed <- datFormatted
-datFormatted_fixed$price <- newPrice
+data_fixed <- data
+data_fixed$price <- newPrice
 
-attach(datFormatted_fixed)
+attach(data_fixed)
 
-lmodel_fixed <- lm(datFormatted_fixed)
+lmodel_fixed <- lm(data_fixed)
 summary(lmodel_fixed)
 
 
@@ -112,7 +110,7 @@ lamb2 <- 1/2
 
 newCarat <- carat^lamb2
 
-datFormatted_fixed2 <- datFormatted_fixed
+datFormatted_fixed2 <- data_fixed
 datFormatted_fixed2$carat <- newCarat
 attach(datFormatted_fixed2)
 
