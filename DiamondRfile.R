@@ -1,4 +1,4 @@
-#setwd("/Users/ben_cosgo/Working_directory/STAT_6021_Project_1")
+setwd("/Users/ben_cosgo/Working_directory/STAT_6021_Project_1")
 #setwd("C:/Users/joony/Documents/myGit/STAT_6021_Project_1")
 
 library("tidyverse")
@@ -17,7 +17,7 @@ table(data$clarity)
 table(data$cut)
 
 #can we order the x axis by worst class to best class?
-#redorder color from worst class to best class
+#reorder color from worst class to best class
 data$color <- factor(data$color, levels=c("J","I","H","G","F","E","D"))
 #check reorder
 table(data$color)
@@ -58,7 +58,7 @@ plot(x, y, main=title, xlab=xlab, ylab=ylab)
 
 
 # perform the linear regression to our newly formatted dataset 
-lmodel <- lm(data)
+lmodel <- lm(price~.,data)
 summary(lmodel)
 
 abline(lmodel, col="red")
@@ -76,7 +76,7 @@ acf(lmodel$residuals)
 qqnorm(lmodel$residuals)
 qqline(lmodel$residuals, col="red")
 
-boxcox(lmodel, lambda=seq(0.37,0.375,by=0.001))
+boxcox(lmodel, lambda=seq(.37,0.375,by=0.001))
 
 lamb <- 0.372
 
@@ -87,7 +87,7 @@ data_fixed$price <- newPrice
 
 attach(data_fixed)
 
-lmodel_fixed <- lm(data_fixed)
+lmodel_fixed <- lm(price~.,data_fixed)
 summary(lmodel_fixed)
 
 
@@ -105,8 +105,7 @@ abline(lmodel_fixed, col="red")
 plot(lmodel_fixed$fitted.values,lmodel_fixed$residuals,main="Residual plot")
 abline(h=0,col="red")
 
-
-lamb2 <- 1/2
+lamb2 <- .69
 
 newCarat <- carat^lamb2
 
@@ -114,7 +113,8 @@ datFormatted_fixed2 <- data_fixed
 datFormatted_fixed2$carat <- newCarat
 attach(datFormatted_fixed2)
 
-lmodel_fixed2 <- lm(datFormatted_fixed2)
+lmodel_fixed2 <- lm(price~.,datFormatted_fixed2)
+summary(lmodel_fixed2)
 
 title = "Price VS. Carat"
 xlab = "Carat"
