@@ -272,16 +272,22 @@ anova(lmodel_noCut, lmodel_fixed2)
 #partial F tests on one interaction
 lmodel_interactioncocl <- lm(price~carat+cut+clarity*color)
 anova(lmodel_fixed2, lmodel_interactioncocl)
+summary(lmodel_interactioncocl)
 lmodel_interactioncocu <- lm(price~carat+clarity+cut*color)
 anova(lmodel_fixed2, lmodel_interactioncocu)
+summary(lmodel_interactioncocu)
 lmodel_interactioncaco <- lm(price~clarity+cut+carat*color)
 anova(lmodel_fixed2, lmodel_interactioncaco)
+summary(lmodel_interactioncaco)
 lmodel_interactionclcu <- lm(price~carat+color+clarity*cut)
 anova(lmodel_fixed2, lmodel_interactionclcu)
+summary(lmodel_interactionclcu)
 lmodel_interactionclca <- lm(price~cut+color+clarity*carat)
 anova(lmodel_fixed2, lmodel_interactionclca)
+summary(lmodel_interactionclca)
 lmodel_interactioncacu <- lm(price~clarity+color+carat*cut)
 anova(lmodel_fixed2, lmodel_interactioncacu)
+summary(lmodel_interactioncacu)
 #all significant
 
 #partial f test on all interactions then between all and one
