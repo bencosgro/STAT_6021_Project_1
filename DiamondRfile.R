@@ -30,10 +30,13 @@ data$cut <- factor(data$cut, levels=c("Good","Very Good","Ideal","Astor Ideal"))
 #check redorder
 table(data$cut)
 #every color class has lots of outliers for high prices - the better the color, the more spread in the outliers
+levene.test(price,color)
 boxplot(price~color,data=data, main="Price vs Color", xlab="Color of Diamond", ylab="Price of Diamond")
 #every clarity class has lots of outliers for high prices
+levene.test(price,clarity)
 boxplot(price~clarity,data=data, main="Price vs Clarity", xlab="Clarity of Diamond", ylab="Price of Diamond")
 #every cut class has lots of outliers for high prices - the better the cut, the more spread in the outliers
+levene.test(price,cut)
 boxplot(price~cut,data=data, main="Price vs Cut", xlab="Cut of Diamond", ylab="Price of Diamond")
 
 # data$colorscore <- as.numeric(colorscore)
@@ -140,6 +143,9 @@ acf(lmodel_fixed2$residuals)
 qqnorm(lmodel_fixed2$residuals)
 qqline(lmodel_fixed2$residuals, col="red")
 
+### we have transformed both the response and numerical predictor and the model is more compliant with the linear model assumtions
+### we will now see if there are multicollinearity 
+
 
 # perform vif analysis 
 vif(lmodel_fixed2)
@@ -148,6 +154,8 @@ vif(lmodel_fixed2)
 # perform anova test 
 anova(lmodel_fixed2)
 # all of the predictors are significant 
+# current data : datFormatted_fixed2
+
 
 # even though all of them are significant predictors and we did not see clear multicorrelations, We still believe clarity and carrots are multicorrelated with price
 
