@@ -180,5 +180,31 @@ anova(lmodel_noColor, lmodel_fixed2)
 anova(lmodel_noCut, lmodel_fixed2)
 
 # partial F tests were significant for all of the categorical variables
-# we can not drop any of the categorical variables. 
+# we can not drop any of the categorical variables.
 
+#partial F tests on one interaction
+lmodel_interactioncocl <- lm(price~carat+cut+clarity*color)
+anova(lmodel_fixed2, lmodel_interactioncocl)
+lmodel_interactioncocu <- lm(price~carat+clarity+cut*color)
+anova(lmodel_fixed2, lmodel_interactioncocu)
+lmodel_interactioncaco <- lm(price~clarity+cut+carat*color)
+anova(lmodel_fixed2, lmodel_interactioncaco)
+lmodel_interactionclcu <- lm(price~carat+color+clarity*cut)
+anova(lmodel_fixed2, lmodel_interactionclcu)
+lmodel_interactionclca <- lm(price~cut+color+clarity*carat)
+anova(lmodel_fixed2, lmodel_interactionclca)
+lmodel_interactioncacu <- lm(price~clarity+color+carat*cut)
+anova(lmodel_fixed2, lmodel_interactioncacu)
+#all significant
+
+#partial f test on all interactions then between all and one
+lmodel_fullInteraction <- lm(price~carat*clarity*cut*color)
+summary(lmodel_fullInteraction)
+anova(lmodel_fixed2, lmodel_fullInteraction)
+anova(lmodel_fixed2, lmodel_interactioncaco)
+anova(lmodel_fixed2, lmodel_interactioncacu)
+anova(lmodel_fixed2, lmodel_interactionclca)
+anova(lmodel_fixed2, lmodel_interactionclcu)
+anova(lmodel_fixed2, lmodel_interactioncocl)
+anova(lmodel_fixed2, lmodel_interactioncocu)
+#all significant again
