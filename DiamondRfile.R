@@ -156,43 +156,29 @@ anova(lmodel_fixed2)
 # all of the predictors are significant 
 # current data : datFormatted_fixed2
 
+# perform pairwise test to see if all categorical variables are significantly different in their means for price for each value
+pairwise_clarity<-glht(lmodel_fixed2, linfct = mcp(clarity= "Tukey"))
+summary(pairwise_clarity)
+pairwise_color<-glht(lmodel_fixed2, linfct = mcp(color= "Tukey"))
+summary(pairwise_color)
+pairwise_cut<-glht(lmodel_fixed2, linfct = mcp(cut= "Tukey"))
+summary(pairwise_cut)
+# they are all significantly different for all pairs
 
-# even though all of them are significant predictors and we did not see clear multicorrelations, We still believe clarity and carrots are multicorrelated with price
+# let s do partial F test for each categorical variable
+# first make the reduced linear regression modellmodel_noClarity <- lm(price~carat+color+cut)
+lmodel_noClarity <- lm(price~carat+color+cut)
+lmodel_noColor <- lm(price~carat+clarity+cut)
+lmodel_noCut <- lm(price~carat+clarity+color)
 
-# lets put clarity as interaction. We will see if clarity has significant interaction with carat
-lmodel_clarityscore <- lm(price~carat*clarityscore + cutscore + colorscore)
-summary(lmodel_clarityscore)
+# perform the partial F test
+# for clarity
+anova(lmodel_noClarity, lmodel_fixed2)
+# for color
+anova(lmodel_noColor, lmodel_fixed2)
+# for cut
+anova(lmodel_noCut, lmodel_fixed2)
 
-
-# now we should check if they assumptions are met
-##residual plot
-plot(lmodel_clarityscore$fitted.values,lmodel_clarityscore$residuals,main="Residual plot")
-abline(h=0,col="red")
-
-##acf plot of residuals
-acf(lmodel_clarityscore$residuals)
-
-##QQ plot of residuals
-qqnorm(lmodel_clarityscore$residuals)
-qqline(lmodel_clarityscore$residuals, col="red")
-
-# did not meet the assumtions at all
-
-
-# perform anova test to see if making clarity score is significant
-anova(lmodel, lmodel_clarityscore)
-# there is a significant interaction between carat and clairty when predicting price
-
-
-
-# test of equality of variance across different clarities
-levene.test(price,clarityscore)
-# the variance is significantly different
-
-# lets just perform tukey's multiple comparison to see
-# if average prices are different for different clarities given same carrot
-pairwise<-glht(lmodel_clarityscore, linfct = mcp(clarityscore= "Tukey"))
-summary(pairwise)
-# yes 
-
+# partial F tests were significant for all of the categorical variables
+# we can not drop any of the categorical variables. 
 
