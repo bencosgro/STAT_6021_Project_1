@@ -1,6 +1,12 @@
 #setwd("/Users/ben_cosgo/Working_directory/STAT_6021_Project_1")
 #setwd("C:/Users/joony/Documents/myGit/STAT_6021_Project_1")
 
+#Benjamin Cosgro (bcc5d)
+#Hannah Frederick (hbf3k)
+#Maureen O'Shea (mo2cr)
+#Joon Yuhl Soh (js8hh)
+
+
 library("tidyverse")
 library(plyr)
 library(dplyr)
