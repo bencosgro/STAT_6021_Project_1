@@ -31,13 +31,13 @@ data$cut <- factor(data$cut, levels=c("Good","Very Good","Ideal","Astor Ideal"))
 table(data$cut)
 #every color class has lots of outliers for high prices - the better the color, the more spread in the outliers
 levene.test(price,color)
-boxplot(price~color,data=data, main="Price vs Color", xlab="Color of Diamond", ylab="Price of Diamond")
+boxplot(price~color,data=data, main="Price vs Color", xlab="Color", ylab="Price")
 #every clarity class has lots of outliers for high prices
 levene.test(price,clarity)
-boxplot(price~clarity,data=data, main="Price vs Clarity", xlab="Clarity of Diamond", ylab="Price of Diamond")
+boxplot(price~clarity,data=data, main="Price vs Clarity", xlab="Clarity", ylab="Price ")
 #every cut class has lots of outliers for high prices - the better the cut, the more spread in the outliers
 levene.test(price,cut)
-boxplot(price~cut,data=data, main="Price vs Cut", xlab="Cut of Diamond", ylab="Price of Diamond")
+boxplot(price~cut,data=data, main="Price vs Cut", xlab="Cut", ylab="Price")
 
 # data$colorscore <- as.numeric(colorscore)
 # data$clarityscore <- as.numeric(clarityscore)
@@ -50,7 +50,7 @@ head(data)
 
 # lets get a scatter plot first 
 
-title = "Price VS. Carat"
+title = "Price vs. Carat"
 xlab = "Carat"
 ylab ="Price"
 x = carat
@@ -74,7 +74,7 @@ reg4 <- lm(price~carat, data=a4)
 reg5 <- lm(price~carat, data=a5)
 reg6 <- lm(price~carat, data=a6)
 reg7 <- lm(price~carat, data=a7)
-plot(carat, price, main="Price vs. Carat by Color")
+plot(carat, price, main="Price vs. Carat by Color", xlab=xlab, ylab=ylab)
 points(a2$carat, a2$price, col='red')
 points(a3$carat, a3$price, col='blue')
 points(a4$carat, a4$price, col='green')
@@ -108,7 +108,7 @@ reg5 <- lm(price~carat, data=a5)
 reg6 <- lm(price~carat, data=a6)
 reg7 <- lm(price~carat, data=a7)
 reg8 <- lm(price~carat, data=a8)
-plot(carat, price, main="Price vs. Carat by Clarity")
+plot(carat, price, main="Price vs. Carat by Clarity", xlab=xlab, ylab=ylab)
 points(a2$carat, a2$price, col='red')
 points(a3$carat, a3$price, col='blue')
 points(a4$carat, a4$price, col='green')
@@ -136,7 +136,7 @@ reg1 <- lm(price~carat, data=a1)
 reg2 <- lm(price~carat, data=a2)
 reg3 <- lm(price~carat, data=a3)
 reg4 <- lm(price~carat, data=a4)
-plot(carat, price, main="Price vs. Carat by Cut")
+plot(carat, price, main="Price vs. Carat by Cut", xlab=xlab, ylab=ylab)
 points(a2$carat, a2$price, col='red')
 points(a3$carat, a3$price, col='blue')
 points(a4$carat, a4$price, col='green')
@@ -156,18 +156,22 @@ abline(lmodel, col="red")
 
 # now we should check if they assumptions are met
 ##residual plot
-plot(lmodel$fitted.values,lmodel$residuals,main="Residual plot")
+plot(lmodel$fitted.values,lmodel$residuals,main="Residual Plot",xlab="Fitted Values", ylab="Residual Values")
 abline(h=0,col="red")
 
 ##acf plot of residuals
-acf(lmodel$residuals)
+acf(lmodel$residuals, main="Autocorrelation Plot")
 
 ##QQ plot of residuals
-qqnorm(lmodel$residuals)
+qqnorm(lmodel$residuals, main="Normal Probability Plot")
 qqline(lmodel$residuals, col="red")
 
+<<<<<<< HEAD
 # boxcox plotting and transformation
 boxcox(lmodel, lambda=seq(.37,0.375,by=0.001), main ="Box-cox plot")
+=======
+boxcox(lmodel, lambda=seq(.37,0.375,by=0.001),main="Box-Cox Plot")
+>>>>>>> 703c3228b1e1657a2d6c27ee073f521c8000812c
 
 lamb <- 0.372
 
@@ -182,7 +186,7 @@ lmodel_fixed <- lm(price~.,data_fixed)
 summary(lmodel_fixed)
 
 
-title = "Price VS. Carat"
+title = "Price vs. Carat"
 xlab = "Carat"
 ylab ="Price"
 x = carat
@@ -193,9 +197,10 @@ plot(x, y, main=title, xlab=xlab, ylab=ylab)
 
 abline(lmodel_fixed, col="red")
 
-plot(lmodel_fixed$fitted.values,lmodel_fixed$residuals,main="Residual plot")
+plot(lmodel_fixed$fitted.values,lmodel_fixed$residuals,main="Residual Plot",xlab="Fitted Values",ylab="Residual Values")
 abline(h=0,col="red")
 
+<<<<<<< HEAD
 ############ x ^ 1/2 section
 lamb2 <- 1/2
 
@@ -222,6 +227,16 @@ abline(lmodel_fixed_sqrt, col="red")
 ###########
 
 lamb2 <- .69
+=======
+##acf plot of residuals
+acf(lmodel_fixed$residuals, main="Autocorrelation Plot")
+
+##QQ plot of residuals
+qqnorm(lmodel_fixed$residuals, main="Normal Probability Plot")
+qqline(lmodel_fixed$residuals, col="red")
+
+lamb2 <- 0.69
+>>>>>>> 703c3228b1e1657a2d6c27ee073f521c8000812c
 
 newCarat <- carat^lamb2
 
@@ -229,10 +244,101 @@ datFormatted_fixed2 <- data_fixed
 datFormatted_fixed2$carat <- newCarat
 attach(datFormatted_fixed2)
 
+#let's plot carat vs price by colorscore
+a1 <- subset(datFormatted_fixed2, color=="J")
+a2 <- subset(datFormatted_fixed2, color=="I")
+a3 <- subset(datFormatted_fixed2, color=="H")
+a4 <- subset(datFormatted_fixed2, color=="G")
+a5 <- subset(datFormatted_fixed2, color=="F")
+a6 <- subset(datFormatted_fixed2, color=="E")
+a7 <- subset(datFormatted_fixed2, color=="D")
+reg1 <- lm(price~carat, data=a1)
+reg2 <- lm(price~carat, data=a2)
+reg3 <- lm(price~carat, data=a3)
+reg4 <- lm(price~carat, data=a4)
+reg5 <- lm(price~carat, data=a5)
+reg6 <- lm(price~carat, data=a6)
+reg7 <- lm(price~carat, data=a7)
+plot(carat, price, main="Price vs. Carat by Color", xlab="Carat", ylab="Price")
+points(a2$carat, a2$price, col='red')
+points(a3$carat, a3$price, col='blue')
+points(a4$carat, a4$price, col='green')
+points(a5$carat, a5$price, col='pink')
+points(a6$carat, a6$price, col='purple')
+points(a7$carat, a7$price, col='orange')
+abline(reg1, lty=1)
+abline(reg2, lty=2, col='red')
+abline(reg3, lty=3, col='blue')
+abline(reg4, lty=4, col='green')
+abline(reg5, lty=5, col='pink')
+abline(reg6, lty=6, col='purple')
+abline(reg7, lty=7, col='orange')
+legend("topright", c("J","I","H","G","F","E","D"), lty=c(1,2,3,4,5,6,7), col=c('black','red','blue','green','pink','purple','orange'))
+#the slopes for all of the lines are similar, but there still may be interaction
+
+#let's plot carat vs price by clarityscore
+a1 <- subset(datFormatted_fixed2, clarity=="SI2")
+a2 <- subset(datFormatted_fixed2, clarity=="SI1")
+a3 <- subset(datFormatted_fixed2, clarity=="VS2")
+a4 <- subset(datFormatted_fixed2, clarity=="VS1")
+a5 <- subset(datFormatted_fixed2, clarity=="VVS2")
+a6 <- subset(datFormatted_fixed2, clarity=="VVS1")
+a7 <- subset(datFormatted_fixed2, clarity=="IF")
+a8 <- subset(datFormatted_fixed2, clarity=="FL")
+reg1 <- lm(price~carat, data=a1)
+reg2 <- lm(price~carat, data=a2)
+reg3 <- lm(price~carat, data=a3)
+reg4 <- lm(price~carat, data=a4)
+reg5 <- lm(price~carat, data=a5)
+reg6 <- lm(price~carat, data=a6)
+reg7 <- lm(price~carat, data=a7)
+reg8 <- lm(price~carat, data=a8)
+plot(carat, price, main="Price vs. Carat by Clarity", xlab="Carat", ylab="Price")
+points(a2$carat, a2$price, col='red')
+points(a3$carat, a3$price, col='blue')
+points(a4$carat, a4$price, col='green')
+points(a5$carat, a5$price, col='pink')
+points(a6$carat, a6$price, col='purple')
+points(a7$carat, a7$price, col='orange')
+points(a8$carat, a8$price, col='yellow')
+abline(reg1, lty=1)
+abline(reg2, lty=2, col='red')
+abline(reg3, lty=3, col='blue')
+abline(reg4, lty=4, col='green')
+abline(reg5, lty=5, col='pink')
+abline(reg6, lty=6, col='purple')
+abline(reg7, lty=7, col='orange')
+abline(reg8, lty=8, col='yellow')
+legend("topright", c("SI2","SI1","VS2","VS1","VVS2","VVS1","IF", "FL"), lty=c(1,2,3,4,5,6,7,8), col=c('black','red','blue','green','pink','purple','orange','yellow'))
+#the slopes for all of the lines are similar, but there still may be interaction
+
+#let's plot carat vs price by cutscore
+a1 <- subset(datFormatted_fixed2, cut=="Good")
+a2 <- subset(datFormatted_fixed2, cut=="Very Good")
+a3 <- subset(datFormatted_fixed2, cut=="Ideal")
+a4 <- subset(datFormatted_fixed2, cut=="Astor Ideal")
+reg1 <- lm(price~carat, data=a1)
+reg2 <- lm(price~carat, data=a2)
+reg3 <- lm(price~carat, data=a3)
+reg4 <- lm(price~carat, data=a4)
+plot(carat, price, main="Price vs. Carat by Cut", xlab="Carat", ylab="Price")
+points(a2$carat, a2$price, col='red')
+points(a3$carat, a3$price, col='blue')
+points(a4$carat, a4$price, col='green')
+abline(reg1, lty=1)
+abline(reg2, lty=2, col='red')
+abline(reg3, lty=3, col='blue')
+abline(reg4, lty=4, col='green')
+legend("topright", c("Good","Very Good","Ideal","Astor Ideal"), lty=c(1,2,3,4), col=c('black','red','blue','green'))
+#the slopes for all of the lines are similar, but there still may be interaction
+
 lmodel_fixed2 <- lm(price~.,datFormatted_fixed2)
 summary(lmodel_fixed2)
 
-title = "Price VS. Carat"
+plot(lmodel_fixed2$fitted.values,lmodel_fixed2$residuals,main="Residual Plot",xlab="Fitted Values",ylab="Residual Values")
+abline(h=0,col="red")
+
+title = "Price vs. Carat"
 xlab = "Carat"
 ylab ="Price"
 x = carat
@@ -246,14 +352,14 @@ abline(lmodel_fixed2, col="red")
 # now we should check if they assumptions are met
 ##residual plot
 
-plot(lmodel_fixed2$fitted.values,lmodel_fixed2$residuals,main="Residual plot")
+plot(lmodel_fixed2$fitted.values,lmodel_fixed2$residuals,main="Residual Plot",xlab="Fitted Values", ylab="Residual Values")
 abline(h=0,col="red")
 
 ##acf plot of residuals
-acf(lmodel_fixed2$residuals)
+acf(lmodel_fixed2$residuals,main="Autocorrelation Plot")
 
 ##QQ plot of residuals
-qqnorm(lmodel_fixed2$residuals)
+qqnorm(lmodel_fixed2$residuals, main="Normal Probability Plot")
 qqline(lmodel_fixed2$residuals, col="red")
 
 ### we have transformed both the response and numerical predictor and the model is more compliant with the linear model assumtions
