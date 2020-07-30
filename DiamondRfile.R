@@ -166,12 +166,9 @@ acf(lmodel$residuals, main="Autocorrelation Plot")
 qqnorm(lmodel$residuals, main="Normal Probability Plot")
 qqline(lmodel$residuals, col="red")
 
-<<<<<<< HEAD
+
 # boxcox plotting and transformation
 boxcox(lmodel, lambda=seq(.37,0.375,by=0.001), main ="Box-cox plot")
-=======
-boxcox(lmodel, lambda=seq(.37,0.375,by=0.001),main="Box-Cox Plot")
->>>>>>> 703c3228b1e1657a2d6c27ee073f521c8000812c
 
 lamb <- 0.372
 
@@ -200,7 +197,6 @@ abline(lmodel_fixed, col="red")
 plot(lmodel_fixed$fitted.values,lmodel_fixed$residuals,main="Residual Plot",xlab="Fitted Values",ylab="Residual Values")
 abline(h=0,col="red")
 
-<<<<<<< HEAD
 ############ x ^ 1/2 section
 lamb2 <- 1/2
 
@@ -227,7 +223,6 @@ abline(lmodel_fixed_sqrt, col="red")
 ###########
 
 lamb2 <- .69
-=======
 ##acf plot of residuals
 acf(lmodel_fixed$residuals, main="Autocorrelation Plot")
 
@@ -236,7 +231,6 @@ qqnorm(lmodel_fixed$residuals, main="Normal Probability Plot")
 qqline(lmodel_fixed$residuals, col="red")
 
 lamb2 <- 0.69
->>>>>>> 703c3228b1e1657a2d6c27ee073f521c8000812c
 
 newCarat <- carat^lamb2
 
