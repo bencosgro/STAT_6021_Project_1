@@ -166,7 +166,8 @@ acf(lmodel$residuals)
 qqnorm(lmodel$residuals)
 qqline(lmodel$residuals, col="red")
 
-boxcox(lmodel, lambda=seq(.37,0.375,by=0.001))
+# boxcox plotting and transformation
+boxcox(lmodel, lambda=seq(.37,0.375,by=0.001), main ="Box-cox plot")
 
 lamb <- 0.372
 
@@ -194,6 +195,31 @@ abline(lmodel_fixed, col="red")
 
 plot(lmodel_fixed$fitted.values,lmodel_fixed$residuals,main="Residual plot")
 abline(h=0,col="red")
+
+############ x ^ 1/2 section
+lamb2 <- 1/2
+
+newCaratSqrt <- carat^lamb2
+
+datFormatted_fixed_sqrt <- data_fixed
+datFormatted_fixed_sqrt$carat <- newCaratSqrt
+
+lmodel_fixed_sqrt <- lm(price~.,datFormatted_fixed_sqrt)
+summary(lmodel_fixed_sqrt)
+
+title = "Price VS. Carat"
+xlab = "Carat"
+ylab ="Price"
+x = datFormatted_fixed_sqrt$carat
+y = datFormatted_fixed_sqrt$price
+
+# Produce a plot. 
+plot(x, y, main=title, xlab=xlab, ylab=ylab)
+
+abline(lmodel_fixed_sqrt, col="red")
+
+
+###########
 
 lamb2 <- .69
 
@@ -246,10 +272,17 @@ anova(lmodel_fixed2)
 # perform pairwise test to see if all categorical variables are significantly different in their means for price for each value
 pairwise_clarity<-glht(lmodel_fixed2, linfct = mcp(clarity= "Tukey"))
 summary(pairwise_clarity)
+#sum <- summary(pairwise_clarity)$test$tstat
+#write.table(sum, "summary_clarity.txt",sep="\t", col.names=F, row.names=T,quote=F)
+
 pairwise_color<-glht(lmodel_fixed2, linfct = mcp(color= "Tukey"))
 summary(pairwise_color)
+#sum <- summary(pairwise_color)$test$tstat
+#write.table(sum, "summary_color.txt",sep="\t", col.names=F, row.names=T,quote=F)
+
 pairwise_cut<-glht(lmodel_fixed2, linfct = mcp(cut= "Tukey"))
 summary(pairwise_cut)
+
 # they are all significantly different for all pairs
 
 # let's do partial F test for each categorical variable
